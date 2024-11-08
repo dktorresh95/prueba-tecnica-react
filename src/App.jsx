@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 import "./App.css";
+
 import { Post } from "./Post";
-import { useEffect } from "react";
 import { Filter } from "./Filter";
+
 function App() {
   const [posts, setPost] = useState([]);
   const [tags, setTags] = useState([]);
@@ -22,7 +24,7 @@ function App() {
         const result = await response.json();
         setPost(result.data);
       } catch (error) {
-        setError(error.message);
+        console.log(error.message);
       }
     };
 
@@ -40,41 +42,19 @@ function App() {
         const result = await response.json();
         setTags(result.data);
       } catch (error) {
-        setError(error.message);
+        console.log(error.message);
       }
     };
 
-    const fetchDataComments = async (id) => {
-      try {
-        const id = "60d21afd67d0d8992e610bad";
-        const response = await fetch(
-          `https://dummyapi.io/data/v1/post/${id}/comment`,
-          {
-            method: "GET",
-            headers: {
-              "app-id": "631251d815c778ad0b7301b6 ",
-            },
-          }
-        );
-        if (!response.ok) {
-          throw new Error("Error en la solicitud");
-        }
-        const result = await response.json();
-        setComments(result.data);
-        console.log(result);
-      } catch (error) {
-        setError(error.message);
-      }
-    };
+
+    
     fetchData();
     fetchDataTag();
-    fetchDataComments();
   }, []);
   return (
     <>
-      <Filter />
+      <Filter tags={tags} setPost={setPost}/>
       <div className="post-page col-12">
-        <h1>Hola post</h1>
         <div className="row">
           {posts.map((post) => (
             <Post key={post.id} props={post} />

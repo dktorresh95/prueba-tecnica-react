@@ -45,11 +45,12 @@ export const Post = ({ props }) => {
         <div className="card" onClick={() => fetchDataComments(props.id)}>
           <img src={props.image} max-width={300} height={400} />
           <br />
+          <p>Tags: </p>
           {props.tags.map((tag) => (
-            <span>{tag} </span>
+            <span key={tag}>{tag} </span>
           ))}
           <p>
-            {props.owner.firstName} {props.owner.lastName}
+            Autor: {props.owner.firstName} {props.owner.lastName}
           </p>
         </div>
       </div>
