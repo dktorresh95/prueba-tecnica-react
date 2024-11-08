@@ -1,8 +1,8 @@
-import { useState } from 'react'
-import './App.css'
-import { Post } from './Post'
-import { useEffect } from 'react';
-import { Filter } from './Filter';
+import { useState } from "react";
+import "./App.css";
+import { Post } from "./Post";
+import { useEffect } from "react";
+import { Filter } from "./Filter";
 function App() {
   const [posts, setPost] = useState([]);
   const [tags, setTags] = useState([]);
@@ -10,53 +10,79 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-
-        const response = await fetch('https://dummyapi.io/data/v1/post', {method: 'GET', headers: {
-          'app-id': '631251d815c778ad0b7301b6 '
-        }}); 
+        const response = await fetch("https://dummyapi.io/data/v1/post", {
+          method: "GET",
+          headers: {
+            "app-id": "631251d815c778ad0b7301b6 ",
+          },
+        });
         if (!response.ok) {
-          throw new Error('Error en la solicitud');
+          throw new Error("Error en la solicitud");
         }
         const result = await response.json();
-        setPost(result.data); 
+        setPost(result.data);
       } catch (error) {
-        setError(error.message); 
+        setError(error.message);
       }
     };
 
     const fetchDataTag = async () => {
       try {
-
-        const response = await fetch('https://dummyapi.io/data/v1/tag', {method: 'GET', headers: {
-          'app-id': '631251d815c778ad0b7301b6 '
-        }}); 
+        const response = await fetch("https://dummyapi.io/data/v1/tag", {
+          method: "GET",
+          headers: {
+            "app-id": "631251d815c778ad0b7301b6 ",
+          },
+        });
         if (!response.ok) {
-          throw new Error('Error en la solicitud');
+          throw new Error("Error en la solicitud");
         }
         const result = await response.json();
-        setTags(result.data); 
-        console.log(result)
+        setTags(result.data);
       } catch (error) {
-        setError(error.message); 
+        setError(error.message);
+      }
+    };
+
+    const fetchDataComments = async (id) => {
+      try {
+        const id = "60d21afd67d0d8992e610bad";
+        const response = await fetch(
+          `https://dummyapi.io/data/v1/post/${id}/comment`,
+          {
+            method: "GET",
+            headers: {
+              "app-id": "631251d815c778ad0b7301b6 ",
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Error en la solicitud");
+        }
+        const result = await response.json();
+        setComments(result.data);
+        console.log(result);
+      } catch (error) {
+        setError(error.message);
       }
     };
     fetchData();
     fetchDataTag();
-  }, []); 
+    fetchDataComments();
+  }, []);
   return (
     <>
-    <Filter />
-      <div className='post-page col-12'>
+      <Filter />
+      <div className="post-page col-12">
         <h1>Hola post</h1>
-        <div className='row'>
-        {
-          posts.map(post => <Post key={post.id} props={post}/>)
-        }
+        <div className="row">
+          {posts.map((post) => (
+            <Post key={post.id} props={post} />
+          ))}
         </div>
-
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
