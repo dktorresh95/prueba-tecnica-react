@@ -2,10 +2,11 @@ import React from "react";
 import { FixedSizeList as List } from "react-window";
 
 export const Filter = ({ tags , setPost}) => {
+  const filteredTags = tags.filter(tag => tag != null && tag !== '');
   const Row = ({ index, style }) => (
     <div className="post">
-      {tags.map((tag) => (
-        <span onClick={() => fetchDataPostByTag(tag)}>{tag} </span>
+      {filteredTags.map((tag) => (
+        <span key={tag} onClick={() => fetchDataPostByTag(tag)}>{tag} </span>
       ))}
     </div>
   );

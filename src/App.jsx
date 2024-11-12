@@ -55,6 +55,7 @@ function App() {
     <>
       <Filter tags={tags} setPost={setPost}/>
       <div className="post-page col-12">
+        <h2>Posts</h2>
         <div className="row">
           {posts.map((post) => (
             <Post key={post.id} props={post} />

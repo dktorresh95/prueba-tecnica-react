@@ -2,7 +2,7 @@
   "name": "prueba-tecnica",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://dktorresh95.github.io/prueba-tecnica-react",
+  "homepage": "https://dktorresh95.github.io/prueba-tecnica-react/",
   "type": "module",
   "scripts": {
     "dev": "vite",

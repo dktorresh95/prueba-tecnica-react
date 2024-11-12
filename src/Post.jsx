@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Modal } from "antd";
-
+import { Button } from "antd";
 export const Post = ({ props }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [comments, setComments] = useState([]);
@@ -41,18 +41,29 @@ export const Post = ({ props }) => {
 
   return (
     <>
-      <div className="col-6">
-        <div className="card" onClick={() => fetchDataComments(props.id)}>
-          <img src={props.image} max-width={300} height={400} />
-          <br />
-          <p>Tags: </p>
-          {props.tags.map((tag) => (
-            <span key={tag}>{tag} </span>
-          ))}
-          <p>
-            Autor: {props.owner.firstName} {props.owner.lastName}
-          </p>
-        </div>
+      <div className="col-3 my-4">
+        {props.id ? (
+          <div className="card">
+            <img src={props.image} />
+            <br />
+
+            <div className="container-tag mb-3">
+              <span>
+                <b>Tags: </b>
+              </span>
+              {props.tags.map((tag) => (
+                <span key={tag}>{tag} </span>
+              ))}
+            </div>
+            <p>
+              <b>Autor: </b> {props.owner.firstName} {props.owner.lastName}
+            </p>
+
+            <Button type="primary" onClick={() => fetchDataComments(props.id)}>Ver comentarios</Button>
+          </div>
+        ) : (
+          <h2>No hay resultados</h2>
+        )}
       </div>
       <Modal
         title="Comentarios"
@@ -63,7 +74,7 @@ export const Post = ({ props }) => {
         {comments.length > 0 ? (
           comments.map((comment) => <p> {comment.message} </p>)
         ) : (
-          <h2>No hay comentarios</h2>
+          <span>No hay comentarios</span>
         )}
       </Modal>
     </>
